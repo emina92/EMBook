@@ -26,6 +26,12 @@ class User < ActiveRecord::Base
     	message: "Must be formatted correctly."
   	}
 
+  has_attached_file :avatar, styles: {
+    large: "800x800!", medium: "300x200!", small: "260x180!", thumb: "80x80!"
+  }
+  validates_attachment :avatar,
+  content_type: { content_type: ["image/jpeg", "image/gif", "image/png"] }
+
   def full_name
   	first_name + " " + last_name
   end
