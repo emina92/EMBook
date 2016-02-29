@@ -3,7 +3,7 @@ class UserFriendshipsController < ApplicationController
 	respond_to :html, :json
 	
 	def index
-		@user_friendships = current_user.user_friendships.all
+		@user_friendships = friendship_association
 		respond_with @user_friendships
 	end
 
@@ -15,6 +15,16 @@ class UserFriendshipsController < ApplicationController
 			flash[:error] = "That friendship could not be accepted."
 		end
 		redirect_to user_friendships_path
+	end
+
+	def block
+		@user_friendship = current_user.user_friendships.find(params[:id])
+		if @user_friendship.block!
+			flash[:success] = "You have blocked #{@user_friendship.friend.first_name}."
+		else
+			flash[:error] = "That friendship could not be blocked."
+		end
+		redirect_to user_friendships_path 
 	end
 
 	def new
@@ -63,5 +73,22 @@ class UserFriendshipsController < ApplicationController
 			flash[:success] = "Friendship destroyed."
 		end
 		redirect_to user_friendships_path
+	end
+
+	private
+
+	def friendship_association
+		case params[:list]
+		when nil
+			current_user.user_friendships.all
+		when 'blocked'
+			current_user.blocked_user_friendships.all
+		when 'pending'
+			current_user.pending_user_friendships.all
+		when 'accepted'
+			current_user.friends.all
+		when 'requested'
+			current_user.requested_user_friendships.all
+		end
 	end
 end
