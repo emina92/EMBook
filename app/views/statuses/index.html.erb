@@ -7,7 +7,7 @@
     <div class="status">
       <div class="row">
         <div class="span1">
-         <%= link_to "Photo", profile_path(status.user) %>
+         <%= link_to image_tag(status.user.avatar.url(:thumb)), profile_path(status.user.profile_name) %>
         </div>
         <div class="span7">
           <strong><%= status.user.full_name %></strong>
