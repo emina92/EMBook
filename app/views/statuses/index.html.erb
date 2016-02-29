@@ -12,6 +12,10 @@
         <div class="span7">
           <strong><%= status.user.full_name %></strong>
           <p><%= status.content %></p>
+            <% if status.document && status.document.file? %>
+              <span class="label label-info">File</span>
+              <%= link_to status.document.file_file_name, status.document.file.url %>
+            <% end %>
           <div class="meta">
             <%= link_to time_ago_in_words(status.created_at) + " ago", status %>
             <span class="admin">

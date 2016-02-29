@@ -9,6 +9,12 @@
   <b>Content:</b>
   <%= @status.content %>
 </p>
+<% if @status.document && @status.document.file? %>
+	<span class="label label-info">File</span>
+	<%= link_to @status.document.file_file_name, @status.document.file.url %>
+	<hr />
+
+<% end %>
 
 <%= link_to 'Edit', edit_status_path(@status) %> |
 <%= link_to 'Back', statuses_path %>

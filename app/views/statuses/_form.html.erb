@@ -1,4 +1,4 @@
-<%= simple_form_for(@status, html: { class: 'form-vertical' }) do |f| %>
+<%= simple_form_for(@status, html: { class: 'form-vertical', multipart: true }) do |f| %>
   <% if @status.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@status.errors.count, "error") %> prohibited this status from being saved:</h2>
@@ -10,7 +10,20 @@
       </ul>
     </div>
   <% end %>
+
   <%= f.input :content %>
+  <%= f.fields_for :document do |document_fields| %>
+    <% if document_fields.object.file? %>
+      <div class="control-group">
+        <label class="control-label">Current file</label>
+        <div class="controls">
+          <%= link_to document_fields.object.file_file_name, document_fields.object.file.url %>
+        </div>
+      </div>
+      <%= document_fields.input :remove_attachment, as: :boolean, label: "Remove file" %>
+    <% end %>
+    <%= document_fields.input :file, as: :file %>
+  <% end %>
   <div class="form-actions">
     <%= f.button :submit, class: "btn btn-primary" %>
   </div>
