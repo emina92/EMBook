@@ -12,7 +12,12 @@
     <label>Profile Picture </label>
     <%= f.file_field :avatar, as: :file %>
     <% if f.object.avatar? %>
-      <%= image_tag f.object.avatar.url(:small)%>
+      <div class="control-group">
+        <label class="control-label">Current avatar</label>
+        <div class="controls">
+            <%= image_tag f.object.avatar.url(:small)%>
+          </div>
+       </div>
     <% end %>
   </div>
 

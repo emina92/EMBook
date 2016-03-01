@@ -3,7 +3,9 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
-
+  
+  has_many :albums
+  has_many :pictures
   has_many :statuses
   has_many :user_friendships
   has_many :friends, -> { where(user_friendships: {state: 'accepted'})}, :through => :user_friendships
@@ -38,6 +40,10 @@ class User < ActiveRecord::Base
 
   def to_param
     profile_name
+  end
+
+  def to_s
+    first_name
   end
   
   def gravatar_url
