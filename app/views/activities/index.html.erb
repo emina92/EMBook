@@ -1,0 +1,15 @@
+<h1>Activity Feed</h1>
+<% @activities.each do |activity| %>
+	<div class="media">
+	 	<%= link_to image_tag(activity.user.avatar.url(:thumb)), profile_path(activity.user.profile_name) %>
+		<div class="media-heading">
+			<h4 class="media-heading"><%= activity.user.full_name %></h4>
+			<%= render partial: "activities/#{activity.targetable_type.underscore}/#{activity.action}",
+			locals: {activity: activity} %>
+			<small><%= activity.created_at %></small>
+		</div>
+	</div>
+	<hr />
+<% end %>
+
+<%= will_paginate @activities %>

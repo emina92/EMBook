@@ -10,9 +10,16 @@
 	<div class="navbar navbar-inverse navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container">
-				<a class="brand" href="#">EMBook</a>
+				<% if user_signed_in? %>
+					<%= link_to "Embook", activities_path, class: "brand" %>
+				<% else %>
+					<%= link_to "Embook", root_path, class: "brand" %>
+				<% end %>
 				<ul class="nav">
+				<% if user_signed_in? %>
 					<li><%= link_to "All Statuses", statuses_path %></li>
+					<li><%= link_to "Activity Feed", activities_path %></li>
+				<% end %>
 				</ul>
 				<ul class="nav pull-right">
 					<% if user_signed_in? %>

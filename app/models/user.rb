@@ -19,6 +19,8 @@ class User < ActiveRecord::Base
   has_many :blocked_user_friendships, -> { where(user_friendships: {state: 'blocked'})}, class_name: 'UserFriendship', foreign_key: :user_id
   has_many :blocked_friends, through: :blocked_user_friendships, source: :friend
 
+  has_many :activities
+
 
   validates :first_name, presence: true
   validates :last_name, presence: true
@@ -55,5 +57,13 @@ class User < ActiveRecord::Base
 
   def has_blocked(other_user)
     blocked_friends.include?(other_user)
+  end
+
+  def create_activity(item, action)
+    activity = activities.new
+    activity.targetable = item
+    activity.action = action
+    activity.save
+    activity
   end
 end

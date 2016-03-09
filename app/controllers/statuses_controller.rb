@@ -29,6 +29,7 @@ class StatusesController < ApplicationController
 
     respond_to do |format|
       if @status.save
+        current_user.create_activity(@status, "created")
         format.html { redirect_to @status, notice: 'Status was successfully created.' }
         format.json { render :show, status: :created, location: @status }
       else
@@ -43,6 +44,7 @@ class StatusesController < ApplicationController
   def update
     respond_to do |format|
       if @status.update(status_params)
+        current_user.create_activity(@status, "updated")
         format.html { redirect_to @status, notice: 'Status was successfully updated.' }
         format.json { render :show, status: :ok, location: @status }
       else
@@ -57,6 +59,7 @@ class StatusesController < ApplicationController
   def destroy
     @status.destroy
     respond_to do |format|
+      current_user.create_activity(@status, "deleted")
       format.html { redirect_to statuses_url, notice: 'Status was successfully destroyed.' }
       format.json { head :no_content }
     end
