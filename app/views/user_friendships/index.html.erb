@@ -1,37 +1,41 @@
-<div class="page-header">
-	<h1>Friends</h1>
-</div>
+<h3>Friends</h3>
+<ul class="nav nav-tabs">
+	<li class="state"><%= link_to "Blocked", user_friendships_path(list: "blocked") %></li>
+	<li class="state"><%= link_to "Requested", user_friendships_path(list: "requested") %></li>
+	<li class="state"><%= link_to "Accepted", user_friendships_path(list: "accepted") %></li>
+	<li class="state"><%= link_to "Pending", user_friendships_path(list: "pending") %></li>
+	
+</ul>
 
-<div>
-	<strong>Friend list:</strong>
-	<%= link_to "Blocked", user_friendships_path(list: "blocked") %>
-	<%= link_to "Requested", user_friendships_path(list: "requested") %>
-	<%= link_to "Accepted", user_friendships_path(list: "accepted") %>
-	<%= link_to "Pending", user_friendships_path(list: "pending") %>
-</div>
-
+<div class="row">
 <% @user_friendships.each do |friendship| %>
 	<% friend = friendship.friend %>
-	<div class="row">
-		<div class="span1">
-			<%= link_to "Image", profile_path(friend) %>
-		</div>
-		<div class="span7">
-			<strong><%= friend.full_name %></strong><br>
-			<% if friendship.pending? %>
-				<em>Friendship is pending.</em><%= link_to "Delete request",
-				edit_user_friendship_path(friendship.friend.profile_name) %>
-			<% end %>
+		<div class="col-md-5">
+			<div class="thumbnail">
+				<div class="row">
+					<div class="col-md-3">
+						<%= link_to image_tag(friend.avatar.url(:thumb), alt: "#{friend.full_name}"), profile_path(friend) %>
+					</div>
 
-			<% if friendship.requested? %>
-				<em>Friendship requested.</em><%= link_to "Accept friendship",
-				edit_user_friendship_path(friendship.friend.profile_name) %>
-			<% end %>
+					<div class="col-md-4">
+						<strong><%= friend.full_name %></strong><br>
+						<% if friendship.pending? %>
+							<em>Friendship is pending.</em>
+							<%= link_to "Delete request", edit_user_friendship_path(friendship.friend.profile_name) %>
+						<% end %>
 
-			<% if friendship.accepted? %>
-				<em>Friendship started.</em><%= link_to "Update friendship",
-				edit_user_friendship_path(friendship.friend.profile_name) %>
-			<% end %>
+						<% if friendship.requested? %>
+							<em>Friendship requested.</em>
+							<%= link_to "Accept friendship", edit_user_friendship_path(friendship.friend.profile_name) %>
+						<% end %>
+
+						<% if friendship.accepted? %>
+							<em>Friendship started.</em>
+							<%= link_to "Update friendship", edit_user_friendship_path(friendship.friend.profile_name)%>
+						<% end %>
+					</div>
+				</div>
+			</div>
 		</div>
-	</div>
-<% end %>	
+<% end %>
+</div>	

@@ -1,30 +1,43 @@
-<div class="page-header">
-  <h1>All of the Statuses</h1>
-</div>
-<%= link_to "Post a New Status", new_status_path, class: "btn btn-success"%>
-<% @statuses.each do |status| %>
-<% if signed_in? && !current_user.has_blocked(status.user)%>
-    <div class="status">
-      <div class="row">
-        <div class="span1">
-         <%= link_to image_tag(status.user.avatar.url(:thumb)), profile_path(status.user.profile_name) %>
-        </div>
-        <div class="span7">
-          <strong><%= status.user.full_name %></strong>
-          <p><%= status.content %></p>
-            <% if status.document && status.document.file? %>
-              <span class="label label-info">File</span>
-              <%= link_to status.document.file_file_name, status.document.file.url %>
-            <% end %>
-          <div class="meta">
-            <%= link_to time_ago_in_words(status.created_at) + " ago", status %>
-            <span class="admin">
-              | <%= link_to "Edit", edit_status_path(status) %> |
-              <%= link_to "Delete", status, method: :delete, data: { confirm: "Are you sure your want to delete this status?"} %>
-            </span>
-          </div>
-        </div>
+<div class="container">
+    <div class="row">
+      <div class="col-md-12">
+          <%= link_to "Post a New Status", new_status_path, class: "btn btn-success"%>
       </div>
     </div>
-  <% end %>
-<% end %>
+    <div class="status">
+        <% @statuses.each do |status| %>
+          <% if !current_user.has_blocked(status.user)%>
+          <div class="row">
+              <div class="col-md-1">
+               <%= link_to image_tag(status.user.avatar.url(:thumb)), profile_path(status.user.profile_name) %>
+              </div>
+              <div class="col-md-11">
+                <p class="name"><%= status.user.full_name %></p>
+                 <%= link_to time_ago_in_words(status.created_at) + " ago", status %>
+              </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <p class="content"><%= status.content %></p>
+              <% if status.document && status.document.file? %>
+                <div>
+                  <span class="label label-info">File</span>
+                  <%= link_to status.document.file_file_name, status.document.file.url %>
+                </div>
+              <% end %>
+              <% if current_user.statuses.include?(status) %>
+                <span class="admin">
+                  <%= link_to "Edit", edit_status_path(status) %> |
+                  <%= link_to "Delete", status, method: :delete, data: { confirm: "Are you sure your want to delete this status?"} %>
+                </span>
+              <% end %>
+            </div>
+          </div>  
+          <% end %>
+          <hr />
+      <% end %>
+    </div>
+</div>
+
+
+

@@ -87,7 +87,7 @@ class UserFriendshipsController < ApplicationController
 		when 'pending'
 			current_user.pending_user_friendships.all
 		when 'accepted'
-			current_user.friends.all
+			current_user.accepted_user_friendships.all
 		when 'requested'
 			current_user.requested_user_friendships.all
 		end

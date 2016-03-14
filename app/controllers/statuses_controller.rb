@@ -1,6 +1,7 @@
 class StatusesController < ApplicationController
   before_action :set_status, only: [:show, :edit, :update, :destroy]
   before_filter :authenticate_user!, only: [:new, :create, :edit, :update]
+  before_filter :is_signed_in?
   # GET /statuses
   # GET /statuses.json
   def index
@@ -62,6 +63,12 @@ class StatusesController < ApplicationController
       current_user.create_activity(@status, "deleted")
       format.html { redirect_to statuses_url, notice: 'Status was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+   def is_signed_in?
+    if !signed_in?
+      redirect_to login_path, notice: "You must be logged in to access that page"
     end
   end
 

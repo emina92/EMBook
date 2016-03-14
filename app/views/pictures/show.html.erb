@@ -1,7 +1,15 @@
-<h1>Viewing Picture</h1>
-<%= image_tag(@picture.asset.url(:large), alt: @picture.caption, class: "img-polaroid") %>
+<h3>Viewing Picture</h3>
 
-<p><%= @picture.caption %></p>
-<p><%= @picture.description %></p>
-<%= link_to "Edit", edit_album_picture_path(@album, @picture) %>
-<%= link_to "Album", album_pictures_path(@album) %>
+<div class="row">
+	<div class="col-md-8">
+		<%= image_tag(@picture.asset.url(:large), alt: @picture.caption, class: "img-polaroid") %>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-4">
+		<p><strong>Caption:</strong> <%= @picture.caption %></p>
+		<p><strong>Description:</strong> <%= @picture.description %></p>
+		<%= link_to "Edit", edit_album_picture_path(@album, @picture) %> |
+		<%= link_to "Album", album_pictures_path(@album) %>
+	</div>
+</div>

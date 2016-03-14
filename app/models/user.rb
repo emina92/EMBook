@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
   
   has_many :albums
   has_many :pictures
-  has_many :statuses
+  has_many :statuses, dependent: :destroy
   has_many :user_friendships
   has_many :friends, -> { where(user_friendships: {state: 'accepted'})}, :through => :user_friendships
   
@@ -19,7 +19,10 @@ class User < ActiveRecord::Base
   has_many :blocked_user_friendships, -> { where(user_friendships: {state: 'blocked'})}, class_name: 'UserFriendship', foreign_key: :user_id
   has_many :blocked_friends, through: :blocked_user_friendships, source: :friend
 
-  has_many :activities
+  has_many :accepted_user_friendships, -> { where(user_friendships: {state: 'accepted'})}, class_name: 'UserFriendship', foreign_key: :user_id
+  has_many :accepted_friends, through: :accepted_user_friendships, source: :friend
+
+  has_many :activities, dependent: :destroy
 
 
   validates :first_name, presence: true

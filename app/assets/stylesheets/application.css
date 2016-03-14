@@ -10,12 +10,35 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
+ *= require bootstrap   
  *= require_tree .
  *= require_self
  */
 body {
-	padding-top: 40px;
+	padding-top: 70px;
 }
-.alert {
-	margin-top: 10px;
+.caret {
+	border-width: 7px;
+}
+nav li {
+	font-size: 16px;
+}
+.name {
+	font-weight: bold;
+	font-size: 16px;
+}
+.container .row {
+	padding-bottom: 0px;
+}
+.content {
+	font-size: 18px;
+}
+.status:hover { 
+	background: #FAFAFA;
+}
+.status .admin {
+	display: none;
+}
+.status:hover .admin {
+	display: inline;
 }

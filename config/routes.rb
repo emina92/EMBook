@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   end
   resources :statuses
   root to: 'statuses#index'
+
   get '/:id', to: 'profiles#show', as: "profile"
   
   scope ":profile_name" do

@@ -1,24 +1,56 @@
-<div class="page-header">
-	<h1><%= @user.full_name %></h1>
+<div class="row">
+	<div class="col-md-3">
+	    <%= link_to image_tag(@user.avatar.url(:small)), profile_path(@user) %>
+	</div>
+	<div class="col-md-6">
+		<h3><%= @user.full_name %></h3>
+		<% if current_user != @user %>
+			<span id="friend-status">
+				<% if current_user.friends.include?(@user) || current_user.pending_friends.include?(@user) %>
+					<%= link_to "Edit Friendship", edit_user_friendship_path(friend_id: @user), class: "btn btn-default" %>
+				<% else %>
+					<%= link_to "Add Friend", new_user_friendship_path(friend_id: @user), class: "btn btn-default", id: "add-friendship", data: {friend_id: @user.to_param } %>
+				<% end %>
+			</span>
+		<% end %>
+	</div>
 </div>
 
-<% if signed_in? %>
-	<%= link_to "Albums", albums_path(@user), class: "btn" %>
-	<span id="friend-status">
-		<% if current_user.friends.include?(@user) || current_user.pending_friends.include?(@user) %>
-			<%= link_to "Edit Friendship", edit_user_friendship_path(friend_id: @user), class: "btn" %>
-		<% else %>
-			<%= link_to "Add Friend", new_user_friendship_path(friend_id: @user), class: "btn", id: "add-friendship", data: {friend_id: @user.to_param } %>
-		<% end %>
-	</span>
-<% end %>
+
+<ul class="nav nav-tabs">
+	<li class="state"><%= link_to "Albums", albums_path(@user), class: "btn"  %></li>
+</ul>
 
 <% if @statuses %>
-	<% @statuses.each do |status| %>
-		<div class="well">
-		<%= status.content %>
-		<hr />
-		<%= link_to time_ago_in_words(status.created_at), status_path(status) %> ago
-		</div>
-	<% end %>
+	<div class="status">
+		<% @statuses.each do |status| %>
+			<div class="row">
+				<div class="col-md-1">
+					<%= link_to image_tag(status.user.avatar.url(:thumb)), profile_path(status.user.profile_name) %>
+				</div>
+				<div class="col-md-11">
+					<p class="name"><%= status.user.full_name %></p>
+					<p><%= link_to time_ago_in_words(status.created_at), status_path(status) %> ago</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<p class="content"><%= status.content %></p>
+					<% if status.document && status.document.file? %>
+						<div>
+                    		<span class="label label-info">File</span>
+                    		<%= link_to status.document.file_file_name, status.document.file.url %>
+                    	</div>
+                  	<% end %>
+                  	<% if current_user.statuses.include?(status) %>
+	                  	<span class="admin">
+	                    	<%= link_to "Edit", edit_status_path(status) %> |
+	                    	<%= link_to "Delete", status, method: :delete, data: { confirm: "Are you sure your want to delete this status?"} %>
+	                  </span>
+                  <% end %>
+				</div>
+			</div>
+			<hr />	
+		<% end %>
+	</div>
 <% end %>

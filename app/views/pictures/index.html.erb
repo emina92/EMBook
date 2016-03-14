@@ -1,24 +1,32 @@
-<%= link_to "Add Picture", new_album_picture_path(current_user, @album), class: "btn pull-right" %>
-<h1><%= @album.title %></h1>
+<% if current_user == @user %>
+	<div class="row">
+		<div class="col-md-12">
+			<%= link_to "Add Picture", new_album_picture_path(current_user, @album), class: "btn btn-success" %>
+		</div>	
+	</div>
+<% end %>
+<h4 id="album-title"><%= @album.title.capitalize %></h4>
 
-<ul class="thumbnails">
+<div class="row">
 	<% @pictures.each do |picture| %>
-	<li>
-		<div class="thumbnail">
-			<%= link_to image_tag(picture.asset.url(:small)), album_picture_path(@user, @album, picture) %><br />
-			<div class="caption">
-				<% if picture.caption? %>
-					<%= picture.caption %><br />
-				<% end %>
-				<%= link_to "View full size", album_picture_path(@user, @album, picture) %>
-				<%= link_to "Edit", edit_album_picture_path(@album, picture) %>
-				<%= link_to "Delete", album_picture_path(@album, picture), method: :delete,
-					data: {confirm: "Are you sure?"} %>
+		<div class="col-sm-6 col-md-3">
+			<div class="thumbnail">
+				<%= link_to image_tag(picture.asset.url(:small)), album_picture_path(@user, @album, picture) %><br />
+				<div class="caption">
+					<% if picture.caption? %>
+						<%= picture.caption %><br />
+					<% end %>
+					<%= link_to "View full size", album_picture_path(@user, @album, picture) %>
+					<% if current_user.pictures.include?(picture) %>
+						| <%= link_to "Edit", edit_album_picture_path(@album, picture) %> |
+						<%= link_to "Delete", album_picture_path(@album, picture), method: :delete,
+							data: {confirm: "Are you sure?"} %>
+					<% end %>
+				</div>
 			</div>
 		</div>
-	</li>
 	<% end %>
-</ul>
+</div>
  
 
 
