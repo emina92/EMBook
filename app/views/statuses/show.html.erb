@@ -1,18 +1,24 @@
-<p>
-  <b>Name: </b>
-  <%= @status.user.full_name %>
-</p>
+<% if @status %>
+	<p>
+	  <b>Name: </b>
+	  <%= @status.user.full_name %>
+	</p>
 
-<p>
-  <b>Content:</b>
-  <%= @status.content %>
-</p>
-<% if @status.document && @status.document.file? %>
-	<span class="label label-info">File</span>
-	<%= link_to @status.document.file_file_name, @status.document.file.url %>
-	<hr />
+	<p>
+	  <b>Content:</b>
+	  <%= @status.content %>
+	</p>
+	<% if @status.document && @status.document.file? %>
+		<span class="label label-info">File</span>
+		<%= link_to @status.document.file_file_name, @status.document.file.url %>
+		<hr />
 
+	<% end %>
+
+	<%= link_to 'Edit', edit_status_path(@status) %> |
+	<%= link_to 'Back', statuses_path %>
+<% else %>
+	<div class="alert alert-danger">
+		<p>Status not found.</p>
+	</div>
 <% end %>
-
-<%= link_to 'Edit', edit_status_path(@status) %> |
-<%= link_to 'Back', statuses_path %>

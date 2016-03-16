@@ -1,5 +1,5 @@
 class StatusesController < ApplicationController
-  before_action :set_status, only: [:show, :edit, :update, :destroy]
+  before_action :set_status, only: [:edit, :update, :destroy]
   before_filter :authenticate_user!, only: [:new, :create, :edit, :update]
   before_filter :is_signed_in?
   # GET /statuses
@@ -11,6 +11,7 @@ class StatusesController < ApplicationController
   # GET /statuses/1
   # GET /statuses/1.json
   def show
+    @status = Status.find_by_id(params[:id])
   end
 
   # GET /statuses/new
