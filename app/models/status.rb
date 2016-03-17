@@ -8,4 +8,6 @@ class Status < ActiveRecord::Base
 						length: { minimum: 2 }
 
 	validates :user_id, presence: true
+
+	has_many :comments, as: :commentable
 end

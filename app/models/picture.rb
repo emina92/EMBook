@@ -8,4 +8,6 @@ class Picture < ActiveRecord::Base
   
   validates_attachment :asset,
   content_type: { content_type: ["image/jpeg", "image/gif", "image/png"] }
+
+  has_many :comments, as: :commentable
 end

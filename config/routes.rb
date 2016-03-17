@@ -19,14 +19,19 @@ Rails.application.routes.draw do
       put :block
     end
   end
-  resources :statuses
+  resources :statuses do
+    resources :comments, module: :statuses
+  end
   root to: 'statuses#index'
 
   get '/:id', to: 'profiles#show', as: "profile"
   
   scope ":profile_name" do
     resources :albums do
-      resources :pictures
+      resources :comments, module: :albums
+      resources :pictures do
+        resources :comments, module: :pictures
+      end
     end
   end 
 

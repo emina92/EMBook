@@ -17,6 +17,8 @@
           <%= link_to "Delete", album_path(album), method: :delete, data: {confirm: "Are you sure?"} %>
         <% end %>
       </div>
+      <%= render partial: "comments/comments", locals: {commentable: album} %>
+      <%= render partial: "comments/form", locals: {commentable: album} %>
     </div>
   <% end %>
 </div>

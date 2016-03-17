@@ -42,3 +42,12 @@ nav li {
 .status:hover .admin {
 	display: inline;
 }
+#user-name {
+	display: inline;
+}
+#user-name a {
+	color: #3b5998;
+}
+#user-name a:hover {
+	background-color: transparent;
+}

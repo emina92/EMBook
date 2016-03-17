@@ -34,6 +34,12 @@
             </div>
           </div>  
           <% end %>
+          <div class="row">
+            <div class="col-md-4">
+              <%= render partial: "comments/comments", locals: {commentable: status} %>
+              <%= render partial: "comments/form", locals: {commentable: status} %>
+            </div>
+          </div>
           <hr />
       <% end %>
     </div>

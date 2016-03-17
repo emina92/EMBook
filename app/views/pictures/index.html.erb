@@ -24,6 +24,8 @@
 					<% end %>
 				</div>
 			</div>
+      		<%= render partial: "comments/comments", locals: {commentable: picture} %>
+      		<%= render partial: "comments/form", locals: {commentable: picture} %>
 		</div>
 	<% end %>
 </div>
