@@ -1,4 +1,5 @@
-/class UserNotifier < ApplicationMailer
+=begin
+class UserNotifier < ApplicationMailer
 
 	def friend_requested(user_friendship_id)
 		user_friendship = UserFriendship.find(user_friendship_id)
@@ -17,4 +18,5 @@
 		mail to: @friend.email,
 				subject: "#{@user.full_name} has accepted your friend request."
 	end
-end/
+end
+=end
