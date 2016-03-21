@@ -4,6 +4,7 @@
 			<div>
 				<p id="user-name"><%=link_to comment.user.full_name, profile_path(comment.user) %></p>
 				<p><%= comment.body %></p>
+				<p id="time"><%= time_ago_in_words(comment.created_at) %> ago</p>
 				<% if commentable.is_a?(Picture) %>
 					<%= link_to "Delete", [comment.commentable.album, comment.commentable, comment], :confirm => "Are you sure?", :method => :delete %>
 				<% else %>

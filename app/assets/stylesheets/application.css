@@ -51,3 +51,7 @@ nav li {
 #user-name a:hover {
 	background-color: transparent;
 }
+#time {
+	display:inline;
+	color: #888;
+}
