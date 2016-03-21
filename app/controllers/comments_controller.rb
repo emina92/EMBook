@@ -11,7 +11,7 @@ class CommentsController < ApplicationController
 		elsif @commentable.is_a?(Album)
 			redirect_to albums_path(@comment.user.profile_name, @commentable), notice: "Your comment was successfully posted."
 		else
-			redirect_to album_pictures_path(@comment.user.profile_name, @commentable.album, @commentable), notice: "Your comment was successfully posted."
+			redirect_to album_pictures_path(@commentable.comment.user.profile_name, @commentable.album, @commentable), notice: "Your comment was successfully posted."
 		end
 	end
 
