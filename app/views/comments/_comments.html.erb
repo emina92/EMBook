@@ -2,7 +2,7 @@
 	<div class="well">
 		<% commentable.comments.each do |comment| %>
 			<div>
-				<p id="user-name"><%=link_to commentable.user.full_name, profile_path(commentable.user) %></p>
+				<p id="user-name"><%=link_to comment.user.full_name, profile_path(comment.user) %></p>
 				<p><%= comment.body %></p>
 				<% if commentable.is_a?(Picture) %>
 					<%= link_to "Delete", [comment.commentable.album, comment.commentable, comment], :confirm => "Are you sure?", :method => :delete %>
