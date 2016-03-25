@@ -11,7 +11,7 @@
 <% @user_friendships.each do |friendship| %>
 	<% friend = friendship.friend %>
 		<div class="col-md-5">
-			<div class="thumbnail">
+			<div class="friend">
 				<div class="row">
 					<div class="col-md-3">
 						<%= link_to image_tag(friend.avatar.url(:thumb), alt: "#{friend.full_name}"), profile_path(friend) %>

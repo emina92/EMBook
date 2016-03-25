@@ -1,15 +1,15 @@
 <% if commentable.is_a?(Picture) %>
 	<%= form_for [commentable.album, commentable, Comment.new] do |f| %>
 		<div class="form-group">
-			<%= f.text_area :body, class: "form-control", placeholder: "Write a comment" %>
+			<%= f.text_area :body, class: "form-control write-comment", placeholder: "Write a comment" %>
 		</div>
-		<%= f.submit class: "btn btn-primary" %>
+		<%= f.submit class: "btn btn-primary create-comment" %>
 	<% end %>
 <% else %>
 	<%= form_for [commentable, Comment.new] do |f| %>
 		<div class="form-group">
-			<%= f.text_area :body, class: "form-control", placeholder: "Write a comment" %>
+			<%= f.text_area :body, class: "form-control write-comment", placeholder: "Write a comment" %>
 		</div>
-		<%= f.submit class: "btn btn-primary" %>
+		<%= f.submit class: "btn btn-primary create-comment" %>
 	<% end %>
 <% end %>

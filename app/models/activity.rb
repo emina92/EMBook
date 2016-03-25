@@ -2,7 +2,7 @@ class Activity < ActiveRecord::Base
 	belongs_to :user
 	belongs_to :targetable, polymorphic: true
 
-	self.per_page = 2
+	self.per_page = 6
 
 	def user_name
 		user.full_name

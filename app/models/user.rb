@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
   	}
 
   has_attached_file :avatar, styles: {
-    large: "800x800!", medium: "300x200!", small: "260x180!", thumb: "80x80!"
+    large: "800x800!", medium: "300x200#", small: "260x180!", thumb: "80x80!"
   }
   validates_attachment :avatar,
   content_type: { content_type: ["image/jpeg", "image/gif", "image/png"] }
@@ -51,13 +51,6 @@ class User < ActiveRecord::Base
     first_name
   end
   
-  def gravatar_url
-    stripped_email = email.strip
-    downcased_email = stripped_email.downcase
-    hash = Digest::MD5.hexdigest(downcased_email)
-    "http:://gravatar.com/avatar/#{hash}"
-  end
-
   def has_blocked(other_user)
     blocked_friends.include?(other_user)
   end

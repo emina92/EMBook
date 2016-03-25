@@ -2,14 +2,13 @@ class StatusesController < ApplicationController
   before_action :set_status, only: [:edit, :update, :destroy]
   before_filter :authenticate_user!, only: [:new, :create, :edit, :update]
   before_filter :is_signed_in?
+  
   # GET /statuses
-  # GET /statuses.json
   def index
     @statuses = Status.order("created_at desc").all
   end
 
   # GET /statuses/1
-  # GET /statuses/1.json
   def show
     @status = Status.find_by_id(params[:id])
   end
@@ -25,7 +24,6 @@ class StatusesController < ApplicationController
   end
 
   # POST /statuses
-  # POST /statuses.json
   def create
     @status = current_user.statuses.new(status_params)
 
@@ -42,7 +40,6 @@ class StatusesController < ApplicationController
   end
 
   # PATCH/PUT /statuses/1
-  # PATCH/PUT /statuses/1.json
   def update
     respond_to do |format|
       if @status.update(status_params)
@@ -57,7 +54,6 @@ class StatusesController < ApplicationController
   end
 
   # DELETE /statuses/1
-  # DELETE /statuses/1.json
   def destroy
     @status.destroy
     respond_to do |format|
@@ -74,12 +70,11 @@ class StatusesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+    
     def set_status
       @status = current_user.statuses.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def status_params
       params.require(:status).permit(:content, :user_id, document_attributes: [:file])
     end

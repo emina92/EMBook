@@ -1,14 +1,16 @@
 <% if !commentable.comments.empty? %>
-	<div class="well">
+	<div class="display-comment">
 		<% commentable.comments.each do |comment| %>
 			<div>
 				<p id="user-name"><%=link_to comment.user.full_name, profile_path(comment.user) %></p>
-				<p><%= comment.body %></p>
+				<p id="body"><%= comment.body %></p>
 				<p id="time"><%= time_ago_in_words(comment.created_at) %> ago</p>
-				<% if commentable.is_a?(Picture) %>
-					<%= link_to "Delete", [comment.commentable.album, comment.commentable, comment], :confirm => "Are you sure?", :method => :delete %>
-				<% else %>
-					<%= link_to "Delete", [comment.commentable, comment], :confirm => "Are you sure?", :method => :delete %>
+				<% if comment.user == current_user %>
+					<% if commentable.is_a?(Picture) %>
+						<%= link_to "Delete", [comment.commentable.album, comment.commentable, comment], :class =>"delete", :confirm => "Are you sure?", :method => :delete %>
+					<% else %>
+						<%= link_to "Delete", [comment.commentable, comment], :class =>"delete", :confirm => "Are you sure?", :method => :delete %>
+					<% end %>
 				<% end %>
 				<hr/>	
 			</div>

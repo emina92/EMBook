@@ -22,41 +22,40 @@
 </ul>
 
 <% if @statuses %>
-	<div class="status">
-		<% @statuses.each do |status| %>
-			<div class="row">
-				<div class="col-md-1">
-					<%= link_to image_tag(status.user.avatar.url(:thumb)), profile_path(status.user.profile_name) %>
+	<% @statuses.each do |status| %>
+		<div class="status">
+				<div class="row">
+					<div class="col-md-1">
+						<%= link_to image_tag(status.user.avatar.url(:thumb)), profile_path(status.user.profile_name) %>
+					</div>
+					<div class="col-md-11">
+						<p class="name"><%= status.user.full_name %></p>
+						<%= link_to time_ago_in_words(status.created_at), status_path(status) %> ago
+						<% if current_user == status.user %>
+		                  	<span class="admin">
+		                    	<%= link_to "Edit", edit_status_path(status) %> |
+		                    	<%= link_to "Delete", status, method: :delete, data: { confirm: "Are you sure your want to delete this status?"} %>
+		                  </span>
+	                  	<% end %>
+					</div>
 				</div>
-				<div class="col-md-11">
-					<p class="name"><%= status.user.full_name %></p>
-					<p><%= link_to time_ago_in_words(status.created_at), status_path(status) %> ago</p>
+				<div class="row">
+					<div class="col-md-12">
+						<p class="content"><%= status.content %></p>
+						<% if status.document && status.document.file? %>
+							<div>
+	                    		<span class="label label-info">File</span>
+	                    		<%= link_to status.document.file_file_name, status.document.file.url %>
+	                    	</div>
+	                  	<% end %>
+					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-12">
-					<p class="content"><%= status.content %></p>
-					<% if status.document && status.document.file? %>
-						<div>
-                    		<span class="label label-info">File</span>
-                    		<%= link_to status.document.file_file_name, status.document.file.url %>
-                    	</div>
-                  	<% end %>
-                  	<% if current_user.statuses.include?(status) %>
-	                  	<span class="admin">
-	                    	<%= link_to "Edit", edit_status_path(status) %> |
-	                    	<%= link_to "Delete", status, method: :delete, data: { confirm: "Are you sure your want to delete this status?"} %>
-	                  </span>
-                  <% end %>
-				</div>
-			</div>
-			<div class="row">
-	            <div class="col-md-4">
-	              <%= render partial: "comments/comments", locals: {commentable: status} %>
-	              <%= render partial: "comments/form", locals: {commentable: status} %>
-	            </div>
-          </div>
-			<hr />	
-		<% end %>
-	</div>
+				<div class="row">
+		            <div class="col-md-4">
+		              <%= render partial: "comments/comments", locals: {commentable: status} %>
+		              <%= render partial: "comments/form", locals: {commentable: status} %>
+		            </div>
+	          </div>
+		</div>
+	<% end %>
 <% end %>

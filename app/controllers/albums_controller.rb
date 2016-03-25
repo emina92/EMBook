@@ -5,13 +5,11 @@ class AlbumsController < ApplicationController
 
 
   # GET /albums
-  # GET /albums.json
   def index
     @albums = @user.albums.all
   end
 
   # GET /albums/1
-  # GET /albums/1.json
   def show
   end
 
@@ -26,7 +24,6 @@ class AlbumsController < ApplicationController
   end
 
   # POST /albums
-  # POST /albums.json
   def create
     @album = current_user.albums.new(album_params)
 
@@ -43,7 +40,6 @@ class AlbumsController < ApplicationController
   end
 
   # PATCH/PUT /albums/1
-  # PATCH/PUT /albums/1.json
   def update
     respond_to do |format|
       if @album.update(album_params)
@@ -58,7 +54,6 @@ class AlbumsController < ApplicationController
   end
 
   # DELETE /albums/1
-  # DELETE /albums/1.json
   def destroy
     @album.destroy
     respond_to do |format|
@@ -82,7 +77,6 @@ class AlbumsController < ApplicationController
       @album = current_user.albums.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def album_params
       params.require(:album).permit(:user_id, :title)
     end

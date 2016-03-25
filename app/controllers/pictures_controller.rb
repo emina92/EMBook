@@ -9,7 +9,6 @@ class PicturesController < ApplicationController
   end
 
   # GET /pictures/1
-  # GET /pictures/1.json
   def show
     add_breadcrumb @picture.caption
   end
@@ -24,7 +23,6 @@ class PicturesController < ApplicationController
   end
 
   # POST /pictures
-  # POST /pictures.json
   def create
     @picture = @album.pictures.new(picture_params)
     @picture.user = current_user
@@ -41,7 +39,6 @@ class PicturesController < ApplicationController
   end
 
   # PATCH/PUT /pictures/1
-  # PATCH/PUT /pictures/1.json
   def update
     respond_to do |format|
       if @picture.update(picture_params)
@@ -56,7 +53,6 @@ class PicturesController < ApplicationController
   end
 
   # DELETE /pictures/1
-  # DELETE /pictures/1.json
   def destroy
     @picture.destroy
     respond_to do |format|
@@ -71,9 +67,7 @@ class PicturesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-
-    # Never trust parameters from the scary internet, only allow the white list through.
+    
     def picture_params
       params.require(:picture).permit(:album_id, :user_id, :caption, :description, :asset)
     end
